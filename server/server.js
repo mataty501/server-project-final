@@ -185,10 +185,27 @@ app.get("/showOrders", async (req, res, next) => {
     //console.log(Data);
     const orders = Data.map(async (elem) => {
       const product = await Product.findById(elem.productID);
+	  
+	  /*
       return {
         ...elem._doc,
         productID: product.title,
+      };*/
+	  
+	  if(product===null){
+		  return {
+        ...elem._doc,
+        productID: 'deleted product',
       };
+	  }
+	  else {
+		   return {
+        ...elem._doc,
+        productID: product.title,
+      };
+	  }
+	  
+	  
     });
     const newOrder = await Promise.all(orders);
     res.status(200);
@@ -218,7 +235,7 @@ app.post("/login", async (req, res, next) => {
         },
         process.env.PRIVATE_KEY,
         {
-          expiresIn: "1m",
+          expiresIn: "1h",
         }
       );
       const refreshToken = jwt.sign(
