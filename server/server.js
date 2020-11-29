@@ -361,6 +361,14 @@ app.post("/addProduct", async (req, res) => {
       await product.save();
 
       res.send({
+		  picture:picture,
+		  picture2:picture2,
+		  picture3:picture3,
+		  name:name,
+		  description:description,
+		  price:price,
+		  newProduct:newProduct,
+		  gender:gender,
         status: true,
         message: "File is uploaded",
       });
